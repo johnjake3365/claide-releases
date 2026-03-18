@@ -1,48 +1,303 @@
 # claIDE
 
-A terminal-first IDE for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) built with Electron.
+A desktop app for working with Claude Code. Instead of a traditional code editor with a small terminal tucked at the bottom, claIDE puts the terminal front and center — because that's where Claude Code lives.
 
-claIDE wraps Claude Code terminals in a project-aware workspace. The terminal is the primary interaction surface — the UI exists to organize, observe, and navigate Claude Code sessions.
+## What is claIDE?
 
-## Download
+claIDE gives you a workspace to run one or more Claude Code sessions, organized by project. You can see what Claude is doing in real time, manage your configuration files, browse your project's files, and keep track of costs — all without leaving the app.
 
-Go to the [Releases](https://github.com/johnjake3365/claide-releases/releases) page and download the latest installer for your platform:
+You don't need to be a programmer to use claIDE. If you can type instructions for Claude, you can use this app.
 
-| Platform | File |
-|----------|------|
-| Windows | `claIDE-Setup-x.x.x.exe` |
-| macOS (Apple Silicon) | `claIDE-x.x.x-arm64.dmg` |
+## Installing
 
-## Features
+Download the latest installer for your platform from the [Releases](https://github.com/johnjake3365/terminator/releases) page:
 
-- **Multi-terminal workspace** — run multiple Claude Code sessions side by side, organized by project
-- **Session monitoring** — live status bar showing context usage, cost, model, active tool, and turn count
-- **File preview** — view markdown (rendered), code (syntax highlighted), images, SVGs, CSV/TSV tables, JSON trees, and PDFs without leaving the IDE
-- **Markdown export** — export rendered markdown as PDF or copy as rich text for sharing
-- **Terminal capture** — save terminal output as markdown or HTML with ANSI color preservation
-- **Session replay** — replay terminal sessions from raw logs with full formatting
-- **File tree** — browse project files with search, pin frequently used files/directories
-- **Claude Config panel** — edit `CLAUDE.md`, settings, rules, skills, and agents from the sidebar
-- **MCP server management** — add, configure, enable/disable, and health-check MCP servers
-- **Database connections** — connect to MSSQL, PostgreSQL, MySQL, and SQLite databases via built-in MCP servers
-- **Memorized commands** — save and recall common commands per project via `>` palette
-- **Configurable key bindings** — customize copy, paste, newline, and capture hotkeys
-- **Theming** — dark (default), light, win95, eclipse, sequoia, and hotdog themes
+- **Windows** — `.exe` installer
+- **macOS** — `.dmg` disk image
+- **Linux** — `.AppImage` or `.deb` package
 
-## Prerequisites
+Run the installer and open claIDE. That's it — no additional setup required.
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) must be installed and authenticated
-- Node.js 18+ (for Claude Code)
+## First Launch
 
-## System Requirements
+When claIDE starts for the first time, it automatically configures itself to work with Claude Code. You'll need Claude Code already installed on your system (see [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code)).
 
-- **Windows** 10/11 (x64)
-- **macOS** 12+ (Apple Silicon)
+To get started:
 
-## License
+1. Open claIDE
+2. Go to **File → Add Project** (or press `Ctrl+Shift+O`)
+3. Choose a folder on your computer — this is the project Claude will work in
+4. A terminal opens automatically. Type `claude` to start a Claude Code session
 
-MIT
+## The Interface
 
-## Author
+claIDE's interface has four main areas:
 
-Jake Hayes
+```
+┌──────────────┬──────────────┬──────────────┬─────────────────┐
+│ Left Sidebar │              │  File Viewer │  Right Sidebar  │
+│              │   Terminal   │  (optional)  │                 │
+│ Projects &   │              │              │  File Browser   │
+│ Terminals    │              │              │  & Search       │
+├──────────────┴──────────────┴──────────────┴─────────────────┤
+│ Status Bar                                                   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### The Terminal (center)
+
+This is the main area where you interact with Claude Code. It works just like any other terminal — you type commands and see output. One terminal is visible at a time; click a different terminal in the left sidebar to switch.
+
+### Left Sidebar — Projects & Terminals
+
+Shows your open projects and the terminals under each one. Click a project name to expand or collapse its terminal list.
+
+**What you can do here:**
+
+- **Add a project** — File → Add Project, or `Ctrl+Shift+O`
+- **Create a new terminal** — Right-click a project → New Terminal, or `Ctrl+Shift+T`
+- **Switch terminals** — Click any terminal name
+- **Rename a terminal** — Double-click its name, or right-click → Rename
+- **Reorder projects** — Drag and drop projects to rearrange them
+- **Close a terminal** — Right-click → Close Terminal
+- **Close a project** — Right-click → Close Project (you'll be warned if terminals are still open)
+
+### Right Sidebar — File Browser
+
+Shows the files and folders in your active project. Click any file to preview it.
+
+**Pinned files** appear at the top — these are special files that Claude Code uses (like `CLAUDE.md`, `.mcp.json`, settings files). Only files that actually exist in your project are shown.
+
+The **search box** at the top filters the file tree by name.
+
+### File Viewer (center-right, optional)
+
+When you click a file in the right sidebar, it opens in a split view next to the terminal:
+
+- **Markdown files** are shown rendered (formatted), with a toggle to see the raw source
+- **Code and text files** are shown with syntax highlighting
+- **Images** (PNG, JPG, GIF, WebP, BMP, ICO) are shown centered with dimensions displayed below
+- **SVG files** are rendered visually, with a toggle to see the XML source
+- **CSV and TSV files** are shown as formatted tables with sticky headers, row numbers, and zebra striping — with a toggle to see the raw text
+- **JSON files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code
+- **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
+- **Edit button** lets you modify text-based files and save changes
+
+Close the file viewer by clicking the X, or by clicking the same file again.
+
+**Focus Lock** (padlock icon in the viewer header) keeps the current file pinned even when you switch terminals. Useful for keeping notes or instructions visible while working across terminals.
+
+### Status Bar (bottom)
+
+Shows live information about the active terminal's Claude Code session:
+
+| Item | What it shows |
+|------|---------------|
+| **Active tool** | The tool Claude is currently using (Bash, Read, Edit, etc.) — appears only while Claude is working |
+| **Context left** | How much conversation context remains before Claude auto-compacts (green = plenty, yellow = getting low, red = nearly full) |
+| **Turns** | Number of back-and-forth exchanges in the current session |
+| **Cost** | Running cost of the session in USD |
+| **Model** | Which Claude model is being used (e.g., Sonnet 4.6, Opus 4.6) |
+
+## Memorized Commands
+
+Save frequently-used commands so you can paste them with a couple of keystrokes. This is useful for commands you run often, like starting a dev server, running tests, or giving Claude a specific instruction.
+
+### Saving a command
+
+1. Select text in the terminal (click and drag, or double-click a word)
+2. Right-click → **Memorize Command**
+3. Give it a name (e.g., "Run tests") and optionally edit the command text
+4. Click Save
+
+### Using a saved command
+
+**From the right-click menu:** Right-click anywhere in the terminal. Your saved commands appear at the bottom of the menu. Click one to paste it into the terminal (it won't run automatically — you press Enter when ready).
+
+**Using the `>` shortcut:** Type `>` at the start of a line (or after a space). A search palette appears with your saved commands. Start typing to filter by name. Press Enter or Tab to paste the selected command. Press Escape to cancel.
+
+The `>` shortcut only activates when:
+- `>` is the first character on the line, or
+- `>` comes after a space or tab
+
+Typing `->`, `<>`, or `>` in the middle of a word won't trigger it.
+
+### Managing commands
+
+Right-click a project in the left sidebar → **Memorized Commands**. This opens a management panel where you can:
+
+- **Add** new commands
+- **Edit** existing command names or text
+- **Delete** commands (with confirmation)
+- **Paste Now** — immediately paste a command into the active terminal
+
+Commands are saved per project and persist across app restarts.
+
+## Claude Config Panel
+
+Access via **View → Claude Config** (`Ctrl+Shift+.`). This panel appears at the bottom of the left sidebar and gives you quick access to Claude Code's global configuration files:
+
+- `CLAUDE.md` — Instructions that Claude reads at the start of every conversation
+- `CLAUDE.local.md` — Personal instructions (not shared with your team)
+- `settings.json` / `settings.local.json` — Claude Code settings
+- `rules/` — Modular instruction files
+- `skills/` — Custom slash commands
+- `agents/` — Custom sub-agents
+
+Click any item to view or edit it. Items shown dimmed don't exist yet — clicking them creates a new file.
+
+## MCP Config Panel
+
+Access via **View → MCP Config** (`Ctrl+Shift+M`). MCP (Model Context Protocol) servers give Claude access to external tools and data sources. This panel appears at the bottom of the right sidebar.
+
+**Two scopes:**
+- **Project** — stored in `.mcp.json` in your project folder (shared with your team)
+- **User** — stored in your global Claude settings (available in all projects)
+
+**What you can do:**
+
+- **Add a server** — Click the `+` button. Choose from templates (GitHub, Slack, Postgres, etc.) or start blank
+- **Edit a server** — Click its name to open the editor
+- **Health check** — HTTP/SSE servers show a green or red dot indicating if they're reachable
+- **Enable/Disable** — Right-click → Enable/Disable (disabled servers are greyed out)
+- **Move between scopes** — Right-click → Move to User/Project
+- **Copy as JSON** — Right-click → Copy as JSON
+- **Delete** — Right-click → Delete
+
+## Terminal Capture
+
+Capture selected terminal text and save it to a file for later reference. Useful for saving Claude's output, error messages, or interesting code snippets.
+
+### Capturing text
+
+1. Select text in the terminal (click and drag)
+2. Right-click → **New Capture** to save to a new file, or **Append Capture** to add to the most recent capture file
+3. The capture opens automatically in the file viewer
+
+You can also use keyboard shortcuts:
+- **Alt+C** — New Capture
+- **Alt+Shift+C** — Append Capture
+
+Both shortcuts can be customized in Settings → Behavior → Terminal Capture.
+
+### Capture formats
+
+Choose your preferred format in Settings → Behavior → Terminal Capture:
+
+| Format | Description |
+|--------|-------------|
+| **Markdown** | Plain text in code blocks — simple, lightweight |
+| **Markdown with HTML** (default) | Terminal colors and formatting preserved as HTML inside markdown |
+| **HTML** | Full standalone HTML document with all terminal styling |
+
+Markdown formats produce `.md` files. HTML format produces `.html` files.
+
+### Managing captures
+
+When viewing a capture file:
+- **Rename** — edit the filename in the bar below the header
+- **Delete** — click the Delete button (with confirmation)
+
+Capture files are stored in a `.capture/` folder inside your project directory. Each entry is separated by a horizontal rule.
+
+## Database Connections
+
+Connect to **SQL Server**, **PostgreSQL**, **MySQL**, and **SQLite** databases from claIDE — browse schemas, run queries, and give Claude Code direct DB access via a local MCP server.
+
+Open **Utilities → Database Connections** to manage connections. Select your database engine when creating a new connection — the form adapts to show engine-specific fields (SSL mode for PostgreSQL, encrypt/trust cert for SQL Server, file path for SQLite, etc.). Start and stop the MCP server directly from the connection editor or via right-click context menu.
+
+Each engine gets its own MCP server with up to 26 tools (fewer for SQLite which lacks stored procedures). Tool names and input schemas are identical across engines, so Claude interacts with all databases the same way.
+
+**See:** Help → Database Connections for the full user guide, or [docs/database-connections.md](docs/database-connections.md)
+
+## Session Replay
+
+Review what happened in a terminal session by replaying its output:
+
+1. Right-click a terminal in the left sidebar → **Session Replay**
+2. The replay opens in the file viewer, showing the terminal output exactly as it appeared (including colors and formatting)
+3. Use the horizontal scrollbar for wide output — no line wrapping is added
+4. Adjust the number of lines shown with the "lines" field at the top
+
+Session Replay requires terminal logging to be enabled (it is by default). See Settings for details.
+
+## Settings
+
+Open via **File → Settings** (`Ctrl+,`).
+
+### Appearance
+- **Theme** — Choose from Dark, Light, Win95, Eclipse, Hot Dog, or Sequoia
+- **Font size** — Terminal font size
+- **Font family** — Terminal font (monospace fonts recommended)
+
+### Behavior
+- **Shell path** — Custom shell path (leave empty for system default)
+- **Copy on select** — Automatically copy text when you select it in the terminal
+- **Scrollback** — Number of lines the terminal remembers (default: 5000)
+- **Key bindings** — Customize shortcuts for newline continuation, copy, and paste
+- **Terminal Capture** — Key bindings for New Capture and Append Capture, plus capture format selection (Markdown, Markdown with HTML, or HTML)
+
+### Terminal Logging
+- **Enable logging** — Save terminal output to files (on by default)
+- **Log formats** — Raw (with colors, for replay) and/or plain text
+- **Log directory** — Where logs are saved (default: `~/.claide/term_logs`)
+- **Per-project folders** — Organize logs by project name
+
+## Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Add Project | `Ctrl+Shift+O` |
+| New Terminal | `Ctrl+Shift+T` |
+| Settings | `Ctrl+,` |
+| Toggle Left Sidebar | `Ctrl+B` |
+| Claude Config | `Ctrl+Shift+.` |
+| MCP Config | `Ctrl+Shift+M` |
+| Copy (in terminal) | `Ctrl+Shift+C` |
+| Paste (in terminal) | `Ctrl+Shift+V` |
+| Newline (line continuation) | `Ctrl+Enter` |
+| New Capture | `Alt+C` |
+| Append Capture | `Alt+Shift+C` |
+| Zoom In / Out / Reset | `Ctrl+=` / `Ctrl+-` / `Ctrl+0` |
+
+Copy, paste, and newline shortcuts can be customized in Settings → Behavior.
+
+## Tips
+
+- **Multiple Claude sessions** — You can run Claude Code in several terminals at once, even in the same project. Each session is independent.
+- **Quick file access** — The pinned files section at the top of the right sidebar gives you one-click access to `CLAUDE.md` and other important config files.
+- **Keep instructions visible** — Open `CLAUDE.md` in the file viewer, then click the lock icon. It stays visible even when you switch terminals.
+- **Command palette for repetitive tasks** — If you find yourself typing the same instructions to Claude, memorize them and use the `>` shortcut.
+- **Watch the status bar** — The "context left" indicator tells you when Claude is running low on memory. When it turns red, Claude will auto-compact the conversation soon.
+- **Review costs** — The status bar shows per-session cost. Use this to stay aware of API usage.
+
+## Requirements
+
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) must be installed and working on your system
+- Windows 10+, macOS 12+, or a modern Linux distribution
+
+## Troubleshooting
+
+**Claude Code doesn't start in the terminal**
+Make sure `claude` works in a regular terminal outside of claIDE. If it does, try closing and reopening the terminal in claIDE.
+
+**Status bar shows no data**
+The status bar only shows information during an active Claude Code session. Start a session by typing `claude` in a terminal.
+
+**Projects don't persist after restart**
+Check that claIDE has write access to its data directory. On Windows this is `%APPDATA%/claide/`, on macOS `~/Library/Application Support/claide/`, on Linux `~/.config/claide/`.
+
+**Terminal feels slow or unresponsive**
+Try reducing the scrollback buffer in Settings → Behavior (default is 5000 lines).
+
+## Building from Source
+
+For developers who want to build claIDE themselves:
+
+```bash
+git clone https://github.com/johnjake3365/terminator.git
+cd terminator
+npm install
+npm run dev      # Development mode with hot reload
+npm run build    # Production build
+```

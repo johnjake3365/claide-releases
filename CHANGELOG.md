@@ -2,6 +2,18 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.1.13
+
+- Add Check for Updates with startup auto-check (Help > Check for Updates)
+- Add Skip This Version button to suppress startup notifications for a specific release
+- Add View Changes button to open release changelog in browser
+- Add Report an Issue menu item (Help > Report an Issue)
+- Omit "type": "stdio" from MCP server config for older Claude Code compatibility
+- Fix "Behaviour" → "Behavior" spelling throughout docs and Settings UI
+- Move release publishing to dedicated workflow
+- Add .capture/, .mcp.json, local settings, and build artifacts to .gitignore
+
+
 ## v1.1.12
 
 - Add PDF file preview in FileViewer
