@@ -70,6 +70,23 @@ Shows the files and folders in your active project. Click any file to preview it
 
 The **search box** at the top filters the file tree by name.
 
+**Right-click menu** on files and folders:
+
+| Action | Description |
+|--------|-------------|
+| **Open with OS** | Open the file in its default application (files only) |
+| **Reveal in Explorer** | Show the file in Finder/Explorer (files only) |
+| **Open in Explorer** | Open the folder in Finder/Explorer (directories only) |
+| **New File** | Create a new file — an inline input appears in the directory |
+| **New Folder** | Create a new folder — an inline input appears in the directory |
+| **Pin / Unpin** | Pin or unpin the item in the sidebar |
+
+Right-clicking **blank space** below the file tree shows New File, New Folder, and Open in Explorer (targeting the project root).
+
+**Drag and drop:**
+- **Drag files in** from Finder/Explorer into the sidebar to copy them into your project. Hover over a specific folder to target it.
+- **Drag files out** from the sidebar to Finder/Explorer or your desktop to copy them.
+
 ### File Viewer (center-right, optional)
 
 When you click a file in the right sidebar, it opens in a split view next to the terminal:
@@ -79,9 +96,12 @@ When you click a file in the right sidebar, it opens in a split view next to the
 - **Images** (PNG, JPG, GIF, WebP, BMP, ICO) are shown centered with dimensions displayed below
 - **SVG files** are rendered visually, with a toggle to see the XML source
 - **CSV and TSV files** are shown as formatted tables with sticky headers, row numbers, and zebra striping — with a toggle to see the raw text
+- **Excel files** (`.xlsx`, `.xls`) are shown as formatted tables with sheet tabs for multi-sheet workbooks
+- **Word documents** (`.docx`) are rendered as formatted text in a sandboxed preview
 - **JSON files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code
 - **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
 - **Edit button** lets you modify text-based files and save changes
+- **Right-click** in the viewer for Copy, Paste (edit mode), and Select All
 
 Close the file viewer by clicking the X, or by clicking the same file again.
 
@@ -94,7 +114,7 @@ Shows live information about the active terminal's Claude Code session:
 | Item | What it shows |
 |------|---------------|
 | **Active tool** | The tool Claude is currently using (Bash, Read, Edit, etc.) — appears only while Claude is working |
-| **Context left** | How much conversation context remains before Claude auto-compacts (green = plenty, yellow = getting low, red = nearly full) |
+| **Context remaining** | How much conversation context remains (green = plenty, yellow = getting low, red = nearly full) |
 | **Turns** | Number of back-and-forth exchanges in the current session |
 | **Cost** | Running cost of the session in USD |
 | **Model** | Which Claude model is being used (e.g., Sonnet 4.6, Opus 4.6) |
@@ -236,6 +256,7 @@ Open via **File → Settings** (`Ctrl+,`).
 - **Scrollback** — Number of lines the terminal remembers (default: 5000)
 - **Key bindings** — Customize shortcuts for newline continuation, copy, and paste
 - **Terminal Capture** — Key bindings for New Capture and Append Capture, plus capture format selection (Markdown, Markdown with HTML, or HTML)
+- **Updates** — Check for updates on startup (enabled by default)
 
 ### Terminal Logging
 - **Enable logging** — Save terminal output to files (on by default)
@@ -270,6 +291,21 @@ Copy, paste, and newline shortcuts can be customized in Settings → Behavior.
 - **Command palette for repetitive tasks** — If you find yourself typing the same instructions to Claude, memorize them and use the `>` shortcut.
 - **Watch the status bar** — The "context left" indicator tells you when Claude is running low on memory. When it turns red, Claude will auto-compact the conversation soon.
 - **Review costs** — The status bar shows per-session cost. Use this to stay aware of API usage.
+
+## Updates
+
+claIDE checks for updates automatically when the app starts. If a new version is available, a dialog appears with options to:
+
+- **Download** — opens the release page in your browser
+- **View Changes** — opens the changelog for the new version
+- **Skip This Version** — suppresses the notification for this specific version (manual checks still show it)
+- **Later** — dismisses without any lasting effect
+
+You can also check manually via **Help → Check for Updates** at any time.
+
+To disable automatic checks, go to **Settings → Behavior** and uncheck "Check for updates on startup."
+
+To report bugs or request features, use **Help → Report an Issue**.
 
 ## Requirements
 

@@ -2,6 +2,14 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.1.14
+
+- Update README and add xlsx/mammoth dependencies
+- Rename status bar label to "Context Remaining"
+- Add preview pane copy/paste, context menu, and XLSX/DOCX support
+- Add OS file integration to right sidebar
+- Update publish workflow to generate changelog and push docs
+
 ## v1.1.13
 
 - Add Check for Updates with startup auto-check (Help > Check for Updates)
