@@ -98,6 +98,8 @@ When you click a file in the right sidebar, it opens in a split view next to the
 - **CSV and TSV files** are shown as formatted tables with sticky headers, row numbers, and zebra striping — with a toggle to see the raw text
 - **Excel files** (`.xlsx`, `.xls`) are shown as formatted tables with sheet tabs for multi-sheet workbooks
 - **Word documents** (`.docx`) are rendered as formatted text in a sandboxed preview
+- **Mermaid diagrams** (`.mmd`, `.mermaid`) are rendered as interactive diagrams with a Rendered/Source toggle — see [Mermaid Diagrams](#mermaid-diagrams) below
+- **Mermaid in Markdown** — ` ```mermaid ` fenced code blocks in `.md` files render as diagrams inline, and are preserved when exporting to PDF or copying as rich text
 - **JSON files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code
 - **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
 - **Edit button** lets you modify text-based files and save changes
@@ -229,6 +231,55 @@ Open **Utilities → Database Connections** to manage connections. Select your d
 Each engine gets its own MCP server with up to 26 tools (fewer for SQLite which lacks stored procedures). Tool names and input schemas are identical across engines, so Claude interacts with all databases the same way.
 
 **See:** Help → Database Connections for the full user guide, or [docs/database-connections.md](docs/database-connections.md)
+
+## Mermaid Diagrams
+
+claIDE renders [Mermaid](https://mermaid.js.org/) diagrams natively — flowcharts, sequence diagrams, ER diagrams, state machines, Gantt charts, and more. Diagrams are plain text, so Claude Code can create, read, and edit them directly.
+
+### Standalone diagram files
+
+Create a `.mmd` or `.mermaid` file in your project:
+
+```
+graph TD
+    A[Browser] -->|HTTPS| B[Load Balancer]
+    B --> C[API Server 1]
+    B --> D[API Server 2]
+    C --> E[(PostgreSQL)]
+    D --> E
+```
+
+Click it in the file tree to see the rendered diagram. Use the **Rendered/Source** toggle to switch between the visual diagram and the text source. Edit via Source → Edit → Save.
+
+### Diagrams in Markdown
+
+Use a fenced code block with the `mermaid` language tag in any `.md` file:
+
+````markdown
+# Architecture
+
+```mermaid
+sequenceDiagram
+    Client->>API: Request
+    API->>DB: Query
+    DB-->>API: Results
+    API-->>Client: Response
+```
+````
+
+The diagram renders inline in the Rendered view. Diagrams are preserved when exporting markdown to PDF or copying as rich text.
+
+### Supported diagram types
+
+Flowchart, Sequence, Class, State, ER, Gantt, Pie, Git Graph, Mindmap, Timeline, Quadrant, Block, Sankey, and more — anything Mermaid supports.
+
+### Working with Claude
+
+Since diagrams are plain text, you can ask Claude to create or modify them:
+
+> "Create a Mermaid ER diagram for the users, orders, and products tables"
+
+> "Add a cache layer to architecture.mmd between the API and database"
 
 ## Session Replay
 

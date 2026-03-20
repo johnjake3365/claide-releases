@@ -2,6 +2,10 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.1.15
+
+- Add Mermaid diagram support and multi-schema database filtering
+
 ## v1.1.14
 
 - Update README and add xlsx/mammoth dependencies
