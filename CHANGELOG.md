@@ -2,6 +2,10 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.1.19
+
+- Fix terminal right-click crash from keybinding array type mismatch
+
 ## v1.1.15
 
 - Add Mermaid diagram support and multi-schema database filtering
