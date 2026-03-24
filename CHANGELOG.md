@@ -2,9 +2,26 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.1.20
+
+- Fix context flicker, drag-drop, pinned menus, and changelog generation
+
 ## v1.1.19
 
 - Fix terminal right-click crash from keybinding array type mismatch
+
+## v1.1.18
+
+- Add Copy Filename to file tree context menu
+
+## v1.1.17
+
+- Fix status bar, drag-drop, link navigation, and add frontmatter support
+
+## v1.1.16
+
+- Update dependencies including xterm.js v6 and build tooling
+- Fix symlink display in file tree and open links in OS browser
 
 ## v1.1.15
 
@@ -28,7 +45,6 @@ All notable changes to claIDE are documented here.
 - Fix "Behaviour" → "Behavior" spelling throughout docs and Settings UI
 - Move release publishing to dedicated workflow
 - Add .capture/, .mcp.json, local settings, and build artifacts to .gitignore
-
 
 ## v1.1.12
 
@@ -195,3 +211,12 @@ All notable changes to claIDE are documented here.
 - Configurable key bindings (copy, paste, newline)
 - Claude Config panel for editing ~/.claude files from the sidebar
 - UX improvements and bug fixes
+
+## v1.0.0
+
+- Initial release
+- Terminal-first IDE for Claude Code built with Electron
+- Project-aware workspace with multiple terminal sessions
+- Claude Code hooks integration for real-time status bar
+- File tree browser with pinned Claude config files
+- Session replay for reviewing terminal output
