@@ -4,6 +4,57 @@ All notable changes to claIDE are documented here.
 
 ## v1.1.20
 
+Terminal Resume
+Pick up right where you left off. claIDE can now automatically resume your last Claude session when you switch to an idle terminal — no need to type claude --resume manually.
+
+
+
+
+Auto-resume sessions
+Enable in Settings → Behavior → Sessions. When you switch to an idle terminal that had an active Claude session, it automatically resumes.
+
+
+
+
+
+Right-click → Resume Session
+Right-click any terminal in the left sidebar or right-click inside the terminal itself to manually resume the last session on demand.
+
+
+
+
+
+Seamless context
+Your full conversation history, cost, and context window state carry over. Status bar reconnects automatically.
+
+
+
+Mermaid Diagrams
+claIDE now renders Mermaid diagrams natively — flowcharts, sequence diagrams, ER diagrams, state machines, Gantt charts, and more. Diagrams are plain text, so Claude Code can create and edit them directly.
+
+Open .mmd or .mermaid files with Rendered/Source toggle
+Inline ```mermaid blocks render inside markdown
+Diagrams preserved in PDF export and rich text copy
+
+Other Features
+Markdown frontmatter — YAML frontmatter between --- delimiters is parsed and displayed as a styled key-value table above the rendered content. Included in PDF exports.
+Interactive checkboxes — Click checkboxes in rendered markdown to toggle them. Works in both task lists (- [ ]) and table cells. Changes save to disk immediately.
+What's New popup — Shows release highlights on first launch of a new version. Also available via Help → What's New.
+Source opens editor — Optional setting (Settings → Behavior) to enter edit mode directly when clicking Source in the preview pane.
+Unsaved changes prompt — Switching away from edit mode or closing the preview pane prompts to Save, Discard, or Cancel when you have unsaved changes.
+Preview refresh — Refresh button in the preview header reloads the file from disk. A "New Version" badge appears automatically when the file changes externally.
+Database schema filtering — MCP connections support optional default schemas and databases. List operations filter to just the specified schemas.
+Improvements & Fixes
+Status bar now uses Claude Code's statusLine API for accurate real-time data
+Symlinks in file tree now resolve to their target type (directories expand correctly)
+Links in the preview pane open in the OS default browser
+Drag and drop from Explorer into the file tree works reliably
+Right-click context menu on all pinned files (Copy Filename, Open in Explorer)
+Context menus stay within viewport bounds
+Updated xterm.js to v6 and all dependencies to latest
+
+## v1.1.20
+
 - Fix context flicker, drag-drop, pinned menus, and changelog generation
 
 ## v1.1.19

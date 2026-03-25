@@ -10,7 +10,7 @@ You don't need to be a programmer to use claIDE. If you can type instructions fo
 
 ## Installing
 
-Download the latest installer for your platform from the [Releases](https://github.com/johnjake3365/terminator/releases) page:
+Download the latest installer for your platform from the [Releases](https://github.com/johnjake3365/claide-releases/releases) page:
 
 - **Windows** — `.exe` installer
 - **macOS** — `.dmg` disk image
@@ -77,6 +77,7 @@ The **search box** at the top filters the file tree by name.
 | **Open with OS** | Open the file in its default application (files only) |
 | **Reveal in Explorer** | Show the file in Finder/Explorer (files only) |
 | **Open in Explorer** | Open the folder in Finder/Explorer (directories only) |
+| **Copy Filename** | Copy the path relative to the project root to the clipboard |
 | **New File** | Create a new file — an inline input appears in the directory |
 | **New Folder** | Create a new folder — an inline input appears in the directory |
 | **Pin / Unpin** | Pin or unpin the item in the sidebar |
@@ -91,7 +92,7 @@ Right-clicking **blank space** below the file tree shows New File, New Folder, a
 
 When you click a file in the right sidebar, it opens in a split view next to the terminal:
 
-- **Markdown files** are shown rendered (formatted), with a toggle to see the raw source
+- **Markdown files** are shown rendered (formatted), with a toggle to see the raw source. YAML frontmatter is displayed as a styled key-value table above the content. Checkboxes (`- [ ]` / `- [x]`) are interactive — click to toggle and save to disk
 - **Code and text files** are shown with syntax highlighting
 - **Images** (PNG, JPG, GIF, WebP, BMP, ICO) are shown centered with dimensions displayed below
 - **SVG files** are rendered visually, with a toggle to see the XML source
@@ -103,6 +104,8 @@ When you click a file in the right sidebar, it opens in a split view next to the
 - **JSON files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code
 - **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
 - **Edit button** lets you modify text-based files and save changes
+- **Unsaved changes guard** — switching from edit mode to rendered view or closing the preview prompts to Save, Discard, or Cancel when you have unsaved edits
+- **Refresh button** — reloads the file from disk. A **"New Version"** badge appears automatically when the file changes externally (e.g. Claude edits it)
 - **Right-click** in the viewer for Copy, Paste (edit mode), and Select All
 
 Close the file viewer by clicking the X, or by clicking the same file again.
@@ -307,6 +310,8 @@ Open via **File → Settings** (`Ctrl+,`).
 - **Scrollback** — Number of lines the terminal remembers (default: 5000)
 - **Key bindings** — Customize shortcuts for newline continuation, copy, and paste
 - **Terminal Capture** — Key bindings for New Capture and Append Capture, plus capture format selection (Markdown, Markdown with HTML, or HTML)
+- **Sessions** — Auto-resume sessions: automatically resume the last Claude session when switching to an idle terminal
+- **Preview Pane** — Source opens editor: clicking Source in the preview pane enters edit mode directly
 - **Updates** — Check for updates on startup (enabled by default)
 
 ### Terminal Logging
@@ -356,6 +361,8 @@ You can also check manually via **Help → Check for Updates** at any time.
 
 To disable automatic checks, go to **Settings → Behavior** and uncheck "Check for updates on startup."
 
+**What's New** — on first launch after an update, a popup shows highlights of what changed. You can also open it anytime via **Help → What's New**.
+
 To report bugs or request features, use **Help → Report an Issue**.
 
 ## Requirements
@@ -377,14 +384,3 @@ Check that claIDE has write access to its data directory. On Windows this is `%A
 **Terminal feels slow or unresponsive**
 Try reducing the scrollback buffer in Settings → Behavior (default is 5000 lines).
 
-## Building from Source
-
-For developers who want to build claIDE themselves:
-
-```bash
-git clone https://github.com/johnjake3365/terminator.git
-cd terminator
-npm install
-npm run dev      # Development mode with hot reload
-npm run build    # Production build
-```
