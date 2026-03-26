@@ -158,6 +158,35 @@ Right-click a project in the left sidebar → **Memorized Commands**. This opens
 
 Commands are saved per project and persist across app restarts.
 
+## TODO.yaml — Task Tracking
+
+Track project tasks with a `TODO.yaml` file in your project root. claIDE renders it as an interactive task list with priorities, due dates, delegation, filtering, and inline editing — while the file stays plain YAML that Claude Code can read and write naturally.
+
+### Quick start
+
+1. Create `TODO.yaml` in your project root (it appears pinned ✅ in the file tree)
+2. Click it to open the interactive todo view
+3. Click **+ Add Task** to create tasks, or ask Claude to add them
+
+### Features
+
+- **Inline editing** — click any field (title, priority, tags, due date, notes) to edit in place
+- **Multi-tag support** — tasks can have multiple tags. Add tags with the `+` button or comma-separated in the Add Task form
+- **Tag cloud** — all tags shown below the filter bar with counts. Click a tag to filter, click again to clear. Right-click a tag to remove it from all tasks
+- **Sticky controls** — filter bar and tag cloud stay visible at the top, Add Task button stays at the bottom, regardless of scroll
+- **Markdown notes** — notes support full markdown rendering. Long notes are truncated with a "see more" link
+- **Resolution buttons** — quickly mark tasks as Active, Deferred, Delegated, Done, Canceled, or Not Mine
+- **Defer with date** — deferred tasks auto-activate when the date arrives
+- **Due date highlighting** — overdue tasks highlighted in red, upcoming tasks in amber
+- **Filtering and sorting** — filter by resolution, priority, or tag, sort by any field
+- **Source mode** — toggle to raw YAML for bulk edits
+- **Archiving** — move completed tasks to `todo_archive.yaml` via Settings → Todo
+- **Claude-friendly** — paste generated schema instructions into your CLAUDE.md (Settings → Todo → Copy to Clipboard)
+
+All priorities, resolutions, and the due-soon threshold are configurable in **Settings → Todo**.
+
+**See:** [docs/todo-yaml.md](docs/todo-yaml.md) for the full guide.
+
 ## Claude Config Panel
 
 Access via **View → Claude Config** (`Ctrl+Shift+.`). This panel appears at the bottom of the left sidebar and gives you quick access to Claude Code's global configuration files:

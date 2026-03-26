@@ -2,6 +2,82 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.2.0
+
+TODO.yaml — Task Tracking
+Track project tasks with a TODO.yaml file in your project root. claIDE renders it as an interactive task list — and Claude Code can read and write it naturally as plain YAML.
+
+
+
+
+Interactive task cards
+Click any field to edit inline — title, priority, tags, due date, notes. Changes save to disk immediately.
+
+
+
+
+
+Multi-tag support & tag cloud
+Tasks support multiple tags. Add with + button or comma-separated. Tag cloud below the filter bar shows all tags with counts — click to filter, right-click to remove globally.
+
+
+
+
+
+Markdown notes
+Notes are always visible, rendered as markdown. Long notes truncate with a "see more" link. Click to edit raw markdown source.
+
+
+
+
+
+Sticky controls
+Filter bar and tag cloud stick to the top, Add Task button sticks to the bottom — always accessible regardless of scroll position.
+
+
+
+
+
+Resolution buttons
+Mark tasks Active, Deferred (with date picker), Delegated (with name), Done, Canceled, or Not Mine. End-state tasks dim automatically.
+
+
+
+
+
+Due dates & deferred activation
+Overdue tasks highlight red, upcoming tasks amber. Deferred tasks auto-activate when the date arrives.
+
+
+
+
+
+Archiving
+Move completed tasks to todo_archive.yaml via Settings → Todo. Reactivate them anytime from the archive.
+
+
+
+
+
+Claude-friendly
+Settings → Todo generates schema instructions you can paste into CLAUDE.md so Claude knows your priorities and resolutions.
+
+
+
+Full guide: Help → TODO.yaml Guide
+Settings → Todo
+A new Todo tab in Settings lets you fully customize the task system:
+
+Priorities — add, remove, rename, and recolor (critical, high, medium, low, or your own)
+Resolutions — define in-progress vs end-state resolutions by sort value
+Due soon threshold — how many days before a deadline the amber highlight kicks in
+Archive — one-click archive of all end-state tasks
+Claude instructions — auto-generated schema text with Copy to Clipboard
+
+Improvements & Fixes
+Shift+Enter newline — now sends the correct CSI u escape sequence, fixing newline insertion in Claude Code sessions
+Preview pane copy — right-clicking selected text in the preview pane no longer deselects it before copying
+
 ## v1.1.20
 
 Terminal Resume
