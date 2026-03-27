@@ -2,6 +2,12 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.2.1
+
+- Security hardening: SQL injection, XSS, path traversal, and input validation fixes
+- Fix multi-terminal data loss, pinned file context menus, drag-and-drop, and remove legacy scroll workarounds
+- Add Memory System design document
+
 ## v1.2.0
 
 TODO.yaml — Task Tracking
