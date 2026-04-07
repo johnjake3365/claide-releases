@@ -2,6 +2,89 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.2.4
+
+Terminal Directives — Persistent Per-Terminal Instructions
+"Always on" context that survives /clear, new sessions, and auto-compaction. Directives are injected into every Claude turn in that terminal as additionalContext via the PreToolUse hook.
+
+
+
+
+Add from selection
+Select text in the preview pane, right-click → Add as Directive. The selection is added as a bullet to the active terminal's directive list.
+
+
+
+
+
+Dedicated editor
+Open the directives editor via the icon next to a terminal name, or press Ctrl+Shift+D on the active terminal.
+
+
+
+
+
+Smart deduplication
+Directives are injected once per new session, then only deltas on subsequent turns. Editing mid-session triggers a re-injection on the next tool call.
+
+
+
+Code-Aware Copy Options
+Right-click in the preview pane on source code to copy symbol references, git line links, and GitHub permalinks. No more manually typing file paths and line numbers.
+
+
+
+
+Copy Line #
+src/foo.ts#L42 — git-style line reference. Works in any source view or edit mode.
+
+
+
+
+
+Copy Classname / Method / Function
+Fully-qualified symbols like com.example.MyClass.doThing(arg: String). Detects enclosing class/method from the clicked line. Supports TypeScript, JavaScript, Java, Kotlin, Python, Go, C#, Rust, C/C++.
+
+
+
+
+
+Copy GitHub URL
+Stable commit-SHA permalink with line anchor: https://github.com/user/repo/blob/<sha>/path#L42. Shown only when the file is in a git repo with a GitHub remote.
+
+
+
+
+
+Copy Path
+Best-available context. Prefers symbol format (file.ts:ClassName.method(sig)) when detected, falls back to line number.
+
+
+
+Terminal Status Bubbles
+A colored dot next to each terminal name shows what Claude is doing — glance at the sidebar to see which terminals need attention without switching to each one.
+
+Amber pulsing — tool pending, usually waiting for your authorization (tooltip shows the tool name)
+Purple pulsing — Claude is working between tool calls
+Green solid — Claude's turn is done, waiting for your next prompt
+&rsaquo; Gray chevron — no active Claude session
+
+Preview Pane Enhancements
+
+YAML & XML tree views — Tree/Source toggle now works for YAML and XML files, not just JSON. Collapsible nodes, color-coded types, attributes surfaced as @attributes keys for XML.
+Kotlin syntax highlighting — .kt and .kts files now highlight correctly.
+Drag files onto the terminal — Drop files directly into the terminal pane to paste their shell-quoted paths.
+
+Performance & Startup
+
+~63% smaller initial bundle — Main JS bundle dropped from ~5.9 MB to ~2.2 MB. Excel, Word, and Mermaid libraries are now lazy-loaded on first use. Syntax highlighter moved to a lean subset of 27 languages instead of all 190.
+Multi-terminal data no longer lost — Inactive terminals now buffer PTY output in the background so you don't miss anything while working in another terminal.
+Legacy xterm scroll workarounds removed — With the xterm 6.0 upgrade, the app no longer needs ~60 lines of shadow-variable scroll preservation code. Scrolling is smoother and more reliable.
+
+Security Hardening
+
+MCP SQL injection prevention — All DDL tools in the MSSQL, PostgreSQL, and MySQL MCP servers now properly escape identifiers (bracket-quoted for MSSQL, double-quoted for PostgreSQL, backtick for MySQL).
+
 ## v1.2.1
 
 - Security hardening: SQL injection, XSS, path traversal, and input validation fixes

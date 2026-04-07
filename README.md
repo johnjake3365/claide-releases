@@ -62,6 +62,17 @@ Shows your open projects and the terminals under each one. Click a project name 
 - **Close a terminal** — Right-click → Close Terminal
 - **Close a project** — Right-click → Close Project (you'll be warned if terminals are still open)
 
+**Terminal status bubbles** — A small colored dot next to each terminal name shows what Claude is doing:
+
+| Color | State |
+|-------|-------|
+| ⚪ Gray chevron | No active Claude session |
+| 🟣 Purple (pulsing) | Claude is working — thinking between tool calls |
+| 🟡 Amber (pulsing) | Tool pending — usually waiting for your authorization to run a tool (the tooltip shows which tool) |
+| 🟢 Green | Claude's turn is complete — waiting for your next prompt |
+
+This lets you glance at the sidebar and see which terminals need attention without switching to each one.
+
 ### Right Sidebar — File Browser
 
 Shows the files and folders in your active project. Click any file to preview it.
@@ -75,8 +86,8 @@ The **search box** at the top filters the file tree by name.
 | Action | Description |
 |--------|-------------|
 | **Open with OS** | Open the file in its default application (files only) |
-| **Reveal in Explorer** | Show the file in Finder/Explorer (files only) |
-| **Open in Explorer** | Open the folder in Finder/Explorer (directories only) |
+| **Reveal in Finder/Explorer** | Show the file in your OS file manager (label adapts to platform — Finder on macOS, Explorer elsewhere) |
+| **Open in Finder/Explorer** | Open the folder in your OS file manager (directories only) |
 | **Copy Filename** | Copy the path relative to the project root to the clipboard |
 | **New File** | Create a new file — an inline input appears in the directory |
 | **New Folder** | Create a new folder — an inline input appears in the directory |
@@ -85,8 +96,9 @@ The **search box** at the top filters the file tree by name.
 Right-clicking **blank space** below the file tree shows New File, New Folder, and Open in Explorer (targeting the project root).
 
 **Drag and drop:**
-- **Drag files in** from Finder/Explorer into the sidebar to copy them into your project. Hover over a specific folder to target it.
-- **Drag files out** from the sidebar to Finder/Explorer or your desktop to copy them.
+- **Drag files in** from your OS file manager into the sidebar to copy them into your project. Hover over a specific folder to target it.
+- **Drag files out** from the sidebar to your file manager or desktop to copy them.
+- **Drag files onto the terminal** to paste their absolute paths as shell-quoted arguments. Useful for quickly passing files to Claude or a command without typing the path.
 
 ### File Viewer (center-right, optional)
 
@@ -101,12 +113,17 @@ When you click a file in the right sidebar, it opens in a split view next to the
 - **Word documents** (`.docx`) are rendered as formatted text in a sandboxed preview
 - **Mermaid diagrams** (`.mmd`, `.mermaid`) are rendered as interactive diagrams with a Rendered/Source toggle — see [Mermaid Diagrams](#mermaid-diagrams) below
 - **Mermaid in Markdown** — ` ```mermaid ` fenced code blocks in `.md` files render as diagrams inline, and are preserved when exporting to PDF or copying as rich text
-- **JSON files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code
+- **JSON, YAML, and XML files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code. YAML is parsed via the `yaml` library; XML uses the browser's `DOMParser` with attributes surfaced as `@attributes` keys
 - **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
 - **Edit button** lets you modify text-based files and save changes
 - **Unsaved changes guard** — switching from edit mode to rendered view or closing the preview prompts to Save, Discard, or Cancel when you have unsaved edits
 - **Refresh button** — reloads the file from disk. A **"New Version"** badge appears automatically when the file changes externally (e.g. Claude edits it)
-- **Right-click** in the viewer for Copy, Paste (edit mode), and Select All
+- **Right-click** in the viewer for Copy, Paste (edit mode), Select All, **Add as Directive** (when text is selected — see Terminal Directives), and code-aware copy options when viewing source code:
+  - **Copy Line #** — `path/to/file.ts#L42` in git-style format
+  - **Copy Classname** — fully-qualified class name (`com.example.MyClass` for Java/Kotlin/C#)
+  - **Copy Method** / **Copy Function** — `ClassName.methodName(sig)` or `functionName(sig)`
+  - **Copy GitHub URL** — stable permalink with commit SHA and line anchor, when the file is in a git repo with a GitHub remote
+  - **Copy Path** — prefers symbol context (`file.ts:ClassName.method()`), falls back to line number. Works for TypeScript, JavaScript, Java, Kotlin, Python, Go, C#, Rust, C/C++
 
 Close the file viewer by clicking the X, or by clicking the same file again.
 
@@ -157,6 +174,25 @@ Right-click a project in the left sidebar → **Memorized Commands**. This opens
 - **Paste Now** — immediately paste a command into the active terminal
 
 Commands are saved per project and persist across app restarts.
+
+## Terminal Directives
+
+Per-terminal persistent instructions that get injected into every Claude turn in that terminal. Think of them as "always-on" context — guidance that survives `/clear`, new sessions, and auto-compaction without you having to re-type it.
+
+**When to use:**
+- "Always use TypeScript strict mode in this project"
+- "When making database changes, run migrations before the test suite"
+- "Don't touch files under `vendor/` without asking"
+- "Use `pnpm` not `npm` for this project"
+
+**How it works:**
+
+1. Select text in the preview pane, right-click → **Add as Directive**. The selection is added as a bullet to the active terminal's directive list.
+2. Alternatively, open the directives editor directly via the **🎯** icon next to a terminal's name, or via `Ctrl+Shift+D` on the active terminal.
+3. Directives are stored per-terminal (not per-project) and persist across app restarts.
+4. On every `PreToolUse` hook event, claIDE's hook script fetches the terminal's directives and returns them as `additionalContext`, which Claude Code injects into its context automatically.
+
+Directives are deduplicated per session — the full directive text is injected once per new session, then only updates are sent on subsequent turns. Editing a directive mid-session triggers a re-injection on the next tool call.
 
 ## TODO.yaml — Task Tracking
 
