@@ -2,6 +2,11 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.2.6
+
+- Periodic update check, Shift+Enter newline fix, settings label update
+- Add automated test suite (217 tests across utilities, IPC, and components)
+
 ## v1.2.4
 
 Terminal Directives — Persistent Per-Terminal Instructions
