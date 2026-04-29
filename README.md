@@ -59,6 +59,7 @@ Shows your open projects and the terminals under each one. Click a project name 
 - **Switch terminals** — Click any terminal name
 - **Rename a terminal** — Double-click its name, or right-click → Rename
 - **Reorder projects** — Drag and drop projects to rearrange them
+- **Group projects** — Create folders to organize related projects together (see [Project Groups](#project-groups))
 - **Close a terminal** — Right-click → Close Terminal
 - **Close a project** — Right-click → Close Project (you'll be warned if terminals are still open)
 
@@ -73,11 +74,43 @@ Shows your open projects and the terminals under each one. Click a project name 
 
 This lets you glance at the sidebar and see which terminals need attention without switching to each one.
 
+#### Project Groups
+
+When you have many projects in the sidebar, you can organize them into collapsible groups. Groups are purely organizational — they have no effect on how projects or terminals work.
+
+**Creating a group:**
+- Click the folder-plus icon next to **Add Project** in the sidebar header, or
+- Right-click empty space in the sidebar → **New Project Group**, or
+- Right-click a project → **Move to Group ▶ → New Group…** (creates a group and moves the project into it)
+
+A new group appears at the bottom of the sidebar with the placeholder name "New Group". Double-click the group name to rename it (or right-click → Rename).
+
+**Adding projects to a group:**
+- **Drag and drop** — drag a project onto a group row to add it
+- **Right-click** a project → **Move to Group ▶** — pick the destination group, or choose **Ungrouped** to remove it from its current group
+
+**Reordering:**
+- Drag groups and ungrouped projects to rearrange them at the top level. Groups and ungrouped projects can be interleaved in any order.
+- Drag projects within a group to reorder them.
+
+**Group operations** (right-click a group):
+- **Rename** — change the group's display name
+- **New Project Group** — create another group
+- **Delete Group** — removes the group; any projects inside become ungrouped (no projects or terminals are closed)
+
+**Collapse / expand** — click the chevron on a group row, or the group name itself, to toggle. Collapse state is remembered across app restarts. Groups display a child count next to the name (e.g. "Work (3)").
+
+Groups support only one level of nesting — you can't put a group inside another group.
+
 ### Right Sidebar — File Browser
 
 Shows the files and folders in your active project. Click any file to preview it.
 
-**Pinned files** appear at the top — these are special files that Claude Code uses (like `CLAUDE.md`, `.mcp.json`, settings files). Only files that actually exist in your project are shown.
+**Pinned files** appear at the top in three flavors:
+
+- **Built-in pins** — special files that Claude Code uses (like `CLAUDE.md`, `.mcp.json`, settings files). Only files that actually exist in your project are shown.
+- **Custom pins** — your own static paths, configured in Settings → Pinned Files.
+- **🪄 Magic Pins** — glob patterns that resolve to the *single newest matching file*, sorted by natural-sort descending. Pin a moving target like the latest dated standup note (`notes/* standup.md`) or the highest-numbered report (`reports/report-*.md`) and the pin re-resolves automatically as files come and go. Configure in Settings → Pinned Files. Hover a magic pin to see the pattern that produced it; right-click → Unpin magic pin to remove it.
 
 The **search box** at the top filters the file tree by name.
 
@@ -112,10 +145,11 @@ When you click a file in the right sidebar, it opens in a split view next to the
 - **Excel files** (`.xlsx`, `.xls`) are shown as formatted tables with sheet tabs for multi-sheet workbooks
 - **Word documents** (`.docx`) are rendered as formatted text in a sandboxed preview
 - **Mermaid diagrams** (`.mmd`, `.mermaid`) are rendered as interactive diagrams with a Rendered/Source toggle — see [Mermaid Diagrams](#mermaid-diagrams) below
-- **Mermaid in Markdown** — ` ```mermaid ` fenced code blocks in `.md` files render as diagrams inline, and are preserved when exporting to PDF or copying as rich text
+- **Mermaid in Markdown** — ` ```mermaid ` fenced code blocks in `.md` files render as diagrams inline, and are preserved when exporting to PDF, HTML, or DOCX
 - **JSON, YAML, and XML files** have a Tree/Source toggle — tree view shows a collapsible, color-coded explorer; source view shows syntax-highlighted code. YAML is parsed via the `yaml` library; XML uses the browser's `DOMParser` with attributes surfaced as `@attributes` keys
 - **HTML files** are rendered in a sandboxed preview, with a toggle to see the source
 - **Edit button** lets you modify text-based files and save changes
+- **Markdown export** — rendered markdown can be exported to **PDF**, **HTML** (standalone styled document), or **DOCX** (Word) via header buttons. All three formats use the same styling so output is visually consistent
 - **Unsaved changes guard** — switching from edit mode to rendered view or closing the preview prompts to Save, Discard, or Cancel when you have unsaved edits
 - **Refresh button** — reloads the file from disk. A **"New Version"** badge appears automatically when the file changes externally (e.g. Claude edits it)
 - **Right-click** in the viewer for Copy, Paste (edit mode), Select All, **Add as Directive** (when text is selected — see Terminal Directives), and code-aware copy options when viewing source code:
@@ -319,6 +353,8 @@ graph TD
 
 Click it in the file tree to see the rendered diagram. Use the **Rendered/Source** toggle to switch between the visual diagram and the text source. Edit via Source → Edit → Save.
 
+**Export** — when a diagram is rendered, **SVG** and **PNG** buttons appear in the header. SVG saves the vector source as-is. PNG rasterizes the diagram at 2× scale on a white background — handy for slide decks and documents that don't accept SVG.
+
 ### Diagrams in Markdown
 
 Use a fenced code block with the `mermaid` language tag in any `.md` file:
@@ -408,6 +444,7 @@ Copy, paste, and newline shortcuts can be customized in Settings → Behavior.
 
 - **Multiple Claude sessions** — You can run Claude Code in several terminals at once, even in the same project. Each session is independent.
 - **Quick file access** — The pinned files section at the top of the right sidebar gives you one-click access to `CLAUDE.md` and other important config files.
+- **Pin a moving target with Magic Pins** — Use a glob like `notes/* standup.md` or `reports/report-*.md` in Settings → Pinned Files → Magic Pins. The pin always resolves to the newest matching file (natural-sort descending), so dropping a new dated note in automatically updates what's pinned.
 - **Keep instructions visible** — Open `CLAUDE.md` in the file viewer, then click the lock icon. It stays visible even when you switch terminals.
 - **Command palette for repetitive tasks** — If you find yourself typing the same instructions to Claude, memorize them and use the `>` shortcut.
 - **Watch the status bar** — The "context left" indicator tells you when Claude is running low on memory. When it turns red, Claude will auto-compact the conversation soon.

@@ -2,6 +2,89 @@
 
 All notable changes to claIDE are documented here.
 
+## v1.2.9
+
+Magic Pins — Pin a Moving Target
+Pin the newest file matching a glob pattern, not a fixed path. Drop a new dated standup note into notes/ and the pin updates automatically — no edit, no re-pin, no clicking around.
+
+
+
+
+Glob patterns, natural-sort descending
+Patterns like notes/*standup.md or reports/report-*.md resolve to the single top match. Sort is locale-aware and numeric, so 2026-04-28-standup.md beats 2026-04-20-standup.md and report-10.md beats report-9.md.
+
+
+
+
+
+Optional label
+Give the pin a stable name like Latest standup, or leave it blank to display the resolved filename directly. Hover the pin to see the pattern that produced it.
+
+
+
+
+
+Auto re-resolves
+When you create, rename, or delete a matching file, the pin updates within a second — driven by the existing project file watcher. Switch projects and each magic pin resolves against the new root.
+
+
+
+
+
+Configure in Settings
+Settings → Pinned Files → Magic Pins. Add a label (optional) and a glob pattern. Use * for any segment, ** for recursive. Right-click any magic pin in the sidebar → Unpin magic pin to remove.
+
+
+
+Also shipped in 1.2.5 &ndash; 1.2.8
+Project Groups &middot; 1.2.7
+Organize the left sidebar by grouping projects into collapsible folders. Purely organizational — no impact on how projects or terminals work.
+
+
+
+
+Create groups
+Click the folder-plus icon next to Add Project, right-click empty sidebar space → New Project Group, or right-click a project → Move to Group → New Group&hellip; to create one with that project already inside.
+
+
+
+
+
+Drag-and-drop everywhere
+Drop a project on a group to add it; drop on top-level to ungroup; drag groups around to reorder. Groups and ungrouped projects can be interleaved in any order.
+
+
+
+
+
+Collapsible with child counts
+Each group shows its child count (e.g. Work (3)). Collapse state is remembered across restarts. Deleting a group leaves its projects intact — they just become ungrouped.
+
+
+
+Markdown & Mermaid Export &middot; 1.2.7
+Three new export formats for rendered markdown, plus dedicated SVG/PNG export for mermaid diagrams. All formats share the same styling so output stays visually consistent across PDF, HTML, and Word.
+
+
+
+
+PDF / HTML / DOCX
+Three buttons in the rendered-markdown header. HTML writes a standalone styled document; DOCX converts to Word via lazy-loaded html-to-docx (no startup cost if you never use it).
+
+
+
+
+
+Mermaid SVG & PNG
+When a mermaid diagram is rendered, SVG and PNG buttons appear in the header. PNG rasterizes at 2&times; scale on a white background — ready to drop into slide decks and docs that don't accept SVG.
+
+
+
+Preview Pane Improvements
+
+Clickable internal markdown links &middot; 1.2.8 — Relative links in rendered markdown (e.g. [notes](<../meetings/2026-04-28 standup.md>)) now resolve against the current file's directory and open the target in the FileViewer. Percent-encoded paths and angle-bracket syntax work; missing files show an alert. http/mailto/tel still hand off to the OS.
+Frontmatter lists render correctly &middot; 1.2.8 — YAML frontmatter values that are arrays (tags:, participants:) no longer show as empty cells. Now powered by the proper YAML parser, with arrays comma-joined and nested objects flattened for the meta table.
+
 ## v1.2.6
 
 - Periodic update check, Shift+Enter newline fix, settings label update
